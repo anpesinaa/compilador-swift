@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        
-        Text("Compilador Swift")
-            .padding()
-            .onAppear {
-                DemoTarea1.run()
-            }
+        VStack {
+            Text("Hello, world!")
+        }
+        .onAppear {
+            testParser()
+        }
     }
 }

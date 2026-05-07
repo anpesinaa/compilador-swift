@@ -1,0 +1,17 @@
+programa funciones;
+vars x : entero;
+
+nula saludo()
+{
+    vars y : entero;
+
+    {
+        escribe("hola", x);
+    }
+};
+
+inicio
+{
+    saludo();
+}
+fin
