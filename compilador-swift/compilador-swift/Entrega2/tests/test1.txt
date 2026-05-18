@@ -1,0 +1,18 @@
+programa prueba;
+
+vars x : entero;
+
+nula saludo()
+{
+    vars y : entero;
+
+    {
+        x = 5;
+    }
+};
+
+inicio
+{
+    saludo();
+}
+fin
