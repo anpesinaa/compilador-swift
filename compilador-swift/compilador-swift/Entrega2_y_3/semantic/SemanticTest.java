@@ -12,7 +12,8 @@ public class SemanticTest {
 
     public static void main(String[] args) throws Exception {
 
-        CharStream input = CharStreams.fromFileName("../tests/test2.txt");
+        CharStream input =
+            CharStreams.fromFileName("../tests/testQuad3.txt");
 
         gramaticaLexer lexer = new gramaticaLexer(input);
 

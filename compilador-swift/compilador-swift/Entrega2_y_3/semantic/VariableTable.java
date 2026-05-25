@@ -35,4 +35,14 @@ public class VariableTable {
             System.out.println("Variable agregada :3: " + name + " : " + type);
         }
     }
+
+    public String getVariableType(String name) {
+
+        if (variables.containsKey(name)) {
+
+            return variables.get(name).type;
+        }
+
+        return null;
+    }
 }
