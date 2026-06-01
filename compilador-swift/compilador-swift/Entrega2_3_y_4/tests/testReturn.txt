@@ -1,0 +1,17 @@
+programa prueba;
+
+vars x : entero;
+
+entero suma()
+{
+    vars y : entero;
+
+    {
+        return 5;
+    }
+};
+
+inicio
+{
+}
+fin

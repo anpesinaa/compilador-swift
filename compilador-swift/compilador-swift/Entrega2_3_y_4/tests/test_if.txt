@@ -1,0 +1,12 @@
+programa prueba;
+
+vars x : entero;
+
+inicio
+{
+si (x > 3)
+{
+x = 1;
+};
+}
+fin
