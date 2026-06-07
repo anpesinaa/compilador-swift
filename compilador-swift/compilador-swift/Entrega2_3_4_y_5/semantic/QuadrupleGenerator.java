@@ -50,9 +50,9 @@ public class QuadrupleGenerator {
 
     public String newTemp() {
 
-        tempCounter++;
-
-        return "t" + tempCounter;
+        return String.valueOf(
+                VirtualMemory.tempInt++
+        );
     }
 
     // ==========================

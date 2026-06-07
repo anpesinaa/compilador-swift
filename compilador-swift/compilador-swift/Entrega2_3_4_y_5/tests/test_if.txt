@@ -1,0 +1,14 @@
+programa prueba;
+
+vars a : entero;
+vars b : entero;
+vars c : entero;
+
+inicio
+{
+    si (a > b)
+    {
+        c = a;
+    };
+}
+fin

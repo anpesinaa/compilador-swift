@@ -7,8 +7,14 @@
 
 public class SemanticListener extends gramaticaBaseListener {
 
+    ConstantTable constantTable = new ConstantTable();
     VariableTable variableTable = new VariableTable();
     FunctionDirectory functionDirectory = new FunctionDirectory();
+    
+    public ConstantTable getConstantTable() {
+
+        return constantTable;
+    }
 
     @Override
     public void enterVars(gramaticaParser.VarsContext ctx) {
@@ -64,10 +70,16 @@ public class SemanticListener extends gramaticaBaseListener {
 
         if (ctx.cte() != null) {
 
-            String value =
-                    ctx.cte().getText();
+            String value = ctx.cte().getText();
 
-            quadGenerator.pushOperand(value);
+            int address =
+                    constantTable.getAddress(
+                            value
+                    );
+
+            quadGenerator.pushOperand(
+                    String.valueOf(address)
+            );
 
             if (value.contains(".")) {
 
@@ -83,7 +95,11 @@ public class SemanticListener extends gramaticaBaseListener {
             }
 
             System.out.println(
-                    "PUSH OPERANDO -> " + value
+                    "PUSH CONSTANTE -> "
+                    + value
+                    + " ["
+                    + address
+                    + "]"
             );
         }
 
@@ -92,19 +108,28 @@ public class SemanticListener extends gramaticaBaseListener {
             String name =
                     ctx.ID().getText();
 
-            quadGenerator.pushOperand(name);
+            Integer address =
+                    variableTable.getVariableAddress(name);
 
-            String type =
-                    variableTable.getVariableType(name);
+            if (address != null) {
 
-            if (type != null) {
+                quadGenerator.pushOperand(
+                        String.valueOf(address)
+                );
+
+                String type =
+                        variableTable.getVariableType(name);
 
                 quadGenerator.pushType(type);
-            }
 
-            System.out.println(
-                    "PUSH VARIABLE -> " + name
+                System.out.println(
+                    "PUSH VARIABLE -> "
+                    + name
+                    + " ["
+                    + address
+                    + "]"
             );
+            }
         }
     }
     
@@ -167,15 +192,23 @@ public class SemanticListener extends gramaticaBaseListener {
             gramaticaParser.AsignaContext ctx) {
 
         String variable =
-                ctx.ID().getText();
+        ctx.ID().getText();
+
+        Integer address =
+                variableTable.getVariableAddress(
+                        variable
+                );
 
         quadGenerator.generateAssignment(
-                variable
+                String.valueOf(address)
         );
 
         System.out.println(
-                "ASIGNACION GENERADA -> " +
-                variable
+                "ASIGNACION GENERADA -> "
+                + variable
+                + " ["
+                + address
+                + "]"
         );
     }
 
@@ -258,5 +291,10 @@ public void exitCondicion(
         System.out.println(
                 "WHILE GENERADO"
         );
+    }
+
+    public QuadrupleGenerator getQuadGenerator() {
+
+        return quadGenerator;
     }
 }

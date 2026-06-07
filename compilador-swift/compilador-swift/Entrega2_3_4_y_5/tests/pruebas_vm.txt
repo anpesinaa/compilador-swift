@@ -1,0 +1,9 @@
+programa prueba;
+
+vars a : entero;
+
+inicio
+{
+    a = 5 > 3;
+}
+fin

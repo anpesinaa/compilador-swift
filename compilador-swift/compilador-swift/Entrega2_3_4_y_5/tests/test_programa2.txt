@@ -1,0 +1,11 @@
+programa prueba;
+
+vars a : entero;
+vars b : entero;
+vars c : entero;
+
+inicio
+{
+    c = a * b;
+}
+fin
