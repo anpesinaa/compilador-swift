@@ -13,7 +13,7 @@ public class SemanticTest {
     public static void main(String[] args) throws Exception {
 
         CharStream input =
-        CharStreams.fromFileName("tests/factorial_ciclico.txt");
+        CharStreams.fromFileName("tests/test_if.txt");
 
         gramaticaLexer lexer = new gramaticaLexer(input);
 
