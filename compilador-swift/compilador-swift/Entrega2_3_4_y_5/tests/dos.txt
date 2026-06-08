@@ -1,0 +1,18 @@
+programa prueba;
+
+vars x : entero;
+vars a : entero;
+vars b : entero;
+vars resultado : entero;
+
+inicio
+{
+    x = 5;
+
+    a = x * 2;
+
+    b = (x - 2) * 2;
+
+    resultado = a + b;
+}
+fin

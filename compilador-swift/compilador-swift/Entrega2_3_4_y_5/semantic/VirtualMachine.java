@@ -197,6 +197,31 @@ public class VirtualMachine {
 
                     break;
 
+                case "GOTOF":
+
+                boolean condition =
+                        (Boolean) memory.get(
+                                Integer.parseInt(q.left)
+                        );
+
+                if (!condition) {
+
+                        ip =
+                                Integer.parseInt(q.result) - 1;
+
+                        continue;
+                }
+
+                break;
+                
+                case "GOTO":
+
+                ip =
+                        Integer.parseInt(q.result) - 1;
+
+                continue;
+                                
+
                 case "=":
 
                     int source =

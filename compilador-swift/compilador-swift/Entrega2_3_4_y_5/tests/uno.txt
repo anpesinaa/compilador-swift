@@ -1,0 +1,11 @@
+programa prueba;
+
+vars x : entero;
+vars resultado : entero;
+
+inicio
+{
+    x = 5;
+    resultado = x * 2;
+}
+fin

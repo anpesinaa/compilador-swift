@@ -297,23 +297,23 @@ public class QuadrupleGenerator {
     public void markLoopStart() {
 
     jumpStack.push(
-            quadruples.size()
+            quadruples.size() + 1
     );
-    }
+}
 
     public void closeWhile() {
 
-    int falseJump =
-            jumpStack.pop();
+        int falseJump =
+                jumpStack.pop();
 
-    int startLoop =
-            jumpStack.pop();
+        int startLoop =
+                jumpStack.pop();
 
-    generateGoTo(startLoop);
+        generateGoTo(startLoop);
 
-    fillJump(
-            falseJump,
-            quadruples.size()
-    );
+        fillJump(
+                falseJump,
+                quadruples.size() + 1
+        );
     }
 }

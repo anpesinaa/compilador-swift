@@ -1,0 +1,25 @@
+programa prueba;
+
+vars x : entero;
+vars temp : entero;
+vars a : entero;
+vars b : entero;
+vars resultado : entero;
+
+inicio
+{
+    x = 5;
+
+    temp = x + 1;
+    temp = temp - 2;
+
+    a = temp * 2;
+
+    b = temp - 2;
+    b = b * 2;
+
+    resultado = a + b;
+
+    resultado = resultado + 3;
+}
+fin

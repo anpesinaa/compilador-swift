@@ -1,12 +1,15 @@
 programa prueba;
 
-vars x : entero;
+vars a : entero;
 
 inicio
 {
-mientras (x < 10) haz
-{
-x = x + 1;
-};
+    a = 1;
+
+    mientras (a < 5)
+    haz
+    {
+        a = a + 1;
+    };
 }
 fin

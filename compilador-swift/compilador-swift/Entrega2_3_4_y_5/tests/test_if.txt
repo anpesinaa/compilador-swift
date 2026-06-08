@@ -1,14 +1,14 @@
 programa prueba;
 
 vars a : entero;
-vars b : entero;
-vars c : entero;
 
 inicio
 {
-    si (a > b)
+    a = 0;
+
+    si (5 > 3)
     {
-        c = a;
+        a = 1;
     };
 }
 fin

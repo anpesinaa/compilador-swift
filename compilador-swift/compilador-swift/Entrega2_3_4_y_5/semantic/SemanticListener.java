@@ -10,6 +10,7 @@ public class SemanticListener extends gramaticaBaseListener {
     ConstantTable constantTable = new ConstantTable();
     VariableTable variableTable = new VariableTable();
     FunctionDirectory functionDirectory = new FunctionDirectory();
+    private boolean waitingForWhileCondition = false;
     
     public ConstantTable getConstantTable() {
 
@@ -173,6 +174,7 @@ public class SemanticListener extends gramaticaBaseListener {
             System.out.println(
                     "CUADRUPLO + GENERADO"
             );
+
         }
 
         for (int i = 0; i < ctx.MINUS().size(); i++) {
@@ -212,31 +214,55 @@ public class SemanticListener extends gramaticaBaseListener {
         );
     }
 
-     @Override
-    public void exitExpresion(
-            gramaticaParser.ExpresionContext ctx) {
+    @Override
+        public void exitExpresion(
+                gramaticaParser.ExpresionContext ctx) {
 
-        if(ctx.getChildCount() == 3){
+            System.out.println("EXIT EXPRESION");
 
-            String op = ctx.getChild(1).getText();
+            if(ctx.getChildCount() == 3){
 
-            if(
-                op.equals(">") ||
-                op.equals("<") ||
-                op.equals("==") ||
-                op.equals("!=")
-            ){
+                String op = ctx.getChild(1).getText();
 
-                quadGenerator.pushOperator(op);
+                if(
+                    op.equals(">") ||
+                    op.equals("<") ||
+                    op.equals("==") ||
+                    op.equals("!=")
+                ){
 
-                quadGenerator.generateOperation();
+                    quadGenerator.pushOperator(op);
 
-                System.out.println(
-                    "CUADRUPLO " + op + " GENERADO"
-                );
+                    quadGenerator.generateOperation();
+
+                    System.out.println(
+                        "CUADRUPLO " + op + " GENERADO"
+                    );
+
+                    if (waitingForWhileCondition) {
+
+                    quadGenerator.generateGoToF();
+
+                    waitingForWhileCondition = false;
+
+                    System.out.println(
+                            "GOTOF WHILE GENERADO"
+                    );
+                }
+
+                if (waitingForIfCondition) {
+
+                    quadGenerator.generateGoToF();
+
+                    waitingForIfCondition = false;
+
+                    System.out.println(
+                            "GOTOF IF GENERADO"
+                    );
+                }
+                }
             }
         }
-    }
 
 
     @Override
@@ -250,48 +276,58 @@ public class SemanticListener extends gramaticaBaseListener {
         );
     }
 
+    private boolean waitingForIfCondition = false;
+
     @Override
-public void exitCondicion(
-        gramaticaParser.CondicionContext ctx) {
+    public void enterCondicion(
+            gramaticaParser.CondicionContext ctx) {
 
-    quadGenerator.generateGoToF();
+        System.out.println("ENTER IF");
 
-    int pending =
-            quadGenerator
-            .getJumpStack()
-            .pop();
-
-    quadGenerator.fillJump(
-            pending,
-            quadGenerator
-                    .getQuadruples()
-                    .size()
-    );
-
-    System.out.println(
-            "IF GENERADO"
-    );
+        waitingForIfCondition = true;
     }
 
-    @Override
+   @Override
+        public void exitCondicion(
+                gramaticaParser.CondicionContext ctx) {
+
+            System.out.println("EXIT IF");
+
+            int pending =
+                    quadGenerator
+                    .getJumpStack()
+                    .pop();
+
+            quadGenerator.fillJump(
+                    pending,
+                    quadGenerator
+                            .getQuadruples()
+                            .size() + 1
+            );
+
+            System.out.println(
+                    "IF GENERADO"
+            );
+        }
+
     public void enterCiclo(
-            gramaticaParser.CicloContext ctx) {
+        gramaticaParser.CicloContext ctx) {
 
         quadGenerator.markLoopStart();
+
+        waitingForWhileCondition = true;
     }
 
     @Override
-    public void exitCiclo(
-            gramaticaParser.CicloContext ctx) {
+        public void exitCiclo(
+                gramaticaParser.CicloContext ctx) {
 
-        quadGenerator.generateGoToF();
+            quadGenerator.closeWhile();
 
-        quadGenerator.closeWhile();
-
-        System.out.println(
-                "WHILE GENERADO"
-        );
-    }
+            System.out.println(
+                    "WHILE GENERADO"
+            );
+        }
 
     public QuadrupleGenerator getQuadGenerator() {
 
